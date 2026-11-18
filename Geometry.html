@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Geometry</title>
+
+    <link rel="stylesheet" href="./css/Geometry.css">
+</head>
+<body>
+
+    <div class="game-container">
+
+        <h1>Geometry</h1>
+
+        <div class="score">
+            Puntuación: <span id="score">0</span>
+        </div>
+
+        <div class="game">
+            <canvas id="gameCanvas" width="900" height="300"></canvas>
+
+            <div class="overlay" id="overlay">
+                <h2 id="message">Geometry</h2>
+                <p id="instruction">Presiona el botón para comenzar</p>
+                <button id="startButton">JUGAR</button>
+            </div>
+        </div>
+
+        <p class="controls">
+            Presiona ESPACIO, ↑ o haz clic para saltar
+        </p>
+
+    </div>
+
+    <script src="./js/Geometry.js"></script>
+
+</body>
+</html>
