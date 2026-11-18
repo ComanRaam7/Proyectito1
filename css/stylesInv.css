@@ -29,14 +29,22 @@ h2 {
 }
 
 .jogador {
-    background: url("jogador.png") no-repeat;
+    background: url("../assets/img/SpaceInvaders/jogador.png") no-repeat;
     background-size: contain;
 }
 
 .invasor {
-    background: url("ovni.png") no-repeat;
+    background: url("../assets/img/SpaceInvaders/ovni.png") no-repeat;
     background-size: contain;
 }
+
+.KABUM {
+    background: url("../assets/img/SpaceInvaders/KABUM.png") no-repeat;
+    background-size: contain;
+}
+
+
+
 
 .tiro::after {
     content: "";
@@ -46,11 +54,6 @@ h2 {
     background-color: red;
     position: absolute;
     right: 13px;
-}
-
-.KABUM {
-    background: url("KABUM.png") no-repeat;
-    background-size: contain;
 }
 
 #controles {
