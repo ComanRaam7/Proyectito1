@@ -1,0 +1,70 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Flappy Cube</title>
+
+        <link rel="stylesheet" href="./css/FlappyCube.css">
+    </head>
+    <body>
+
+        <main class="game-wrapper">
+
+            <header class="game-header">
+                <h1>FLAPPY <span>CUBE</span></h1>
+                <p>¡Vuela y evita los obstáculos!</p>
+            </header>
+
+            <div class="score-container">
+                <div class="score-box">
+                    <span>PUNTUACIÓN</span>
+                    <strong id="score">0</strong>
+                </div>
+            </div>
+
+            <div id="game-container">
+
+                <!-- Nubes -->
+                <div class="cloud cloud-one"></div>
+                <div class="cloud cloud-two"></div>
+                <div class="cloud cloud-three"></div>
+
+                <!-- Obstáculos -->
+                <div id="obstacles"></div>
+
+                <!-- Jugador -->
+                <div id="bird"></div>
+
+                <!-- Suelo -->
+                <div class="ground"></div>
+
+                <!-- Menú principal -->
+                <div class="overlay" id="overlay">
+
+                    <h2 id="message">FLAPPY CUBE</h2>
+
+                    <p id="instruction">
+                        Prepárate para volar
+                    </p>
+
+                    <button id="startButton" type="button">
+                        JUGAR
+                    </button>
+
+                </div>
+
+            </div>
+
+            <footer class="controls">
+                <p>ESPACIO / ↑ / CLIC</p>
+                <span>Presiona para hacer volar el cubo</span>
+            </footer>
+
+        </main>
+
+        <script src="./js/FlappyCube.js"></script>
+
+    </body>
+    </html>
