@@ -244,3 +244,57 @@ body {
         font-size: 0.95rem;
     }
 }
+
+/* ========================================
+   BARRA SUPERIOR (ESTILO GRAYSCALE)
+======================================== */
+
+.top-navbar {
+    width: 100%;
+    padding: 18px 36px;
+    background: rgba(12, 12, 12, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.brand-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.brand-link:hover {
+    color: #ffffff;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active-link {
+    color: #ffffff;
+}
