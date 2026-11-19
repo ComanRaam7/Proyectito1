@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arena de Combate</title>
+  <link rel="stylesheet" href="css/Stylepokemon.css">
+</head>
+<body>
+
+  <div class="arena">
+    
+    <div id="pantalla-seleccion" class="pantalla-seleccion">
+      <h2>Elige tu criatura</h2>
+      <p class="subtitulo">Selecciona a tu compañero para entrar a la arena:</p>
+      <div id="lista-criaturas" class="lista-criaturas"></div>
+    </div>
+
+    <div id="pantalla-combate" class="oculto">
+      <div class="campo-batalla">
+        
+        <div class="fila-rival">
+          <div class="hud-criatura">
+            <div class="cabecera-hud">
+              <strong id="nombre-rival">Rival</strong>
+              <span id="tipo-rival" class="etiqueta-tipo">Tipo</span>
+            </div>
+            <div class="barra-fondo">
+              <div id="barra-rival" class="barra-vida"></div>
+            </div>
+            <div id="hp-rival" class="texto-hp">100 / 100</div>
+          </div>
+          <div class="contenedor-sprite">
+            <img id="sprite-rival" class="sprite-img" src="" alt="Rival">
+          </div>
+        </div>
+
+        <div class="fila-jugador">
+          <div class="hud-criatura">
+            <div class="cabecera-hud">
+              <strong id="nombre-jugador">Jugador</strong>
+              <span id="tipo-jugador" class="etiqueta-tipo">Tipo</span>
+            </div>
+            <div class="barra-fondo">
+              <div id="barra-jugador" class="barra-vida"></div>
+            </div>
+            <div id="hp-jugador" class="texto-hp">100 / 100</div>
+          </div>
+          <div class="contenedor-sprite">
+            <img id="sprite-jugador" class="sprite-img" src="" alt="Jugador">
+          </div>
+        </div>
+
+      </div>
+
+      <div id="caja-texto" class="caja-texto"></div>
+
+      <div id="panel-ataques" class="panel-ataques"></div>
+      
+      <button id="btn-reiniciar" class="btn-reiniciar" onclick="volverASeleccion()">
+        Elegir otra criatura
+      </button>
+    </div>
+
+  </div>
+
+  <script src="js/pokemon.js"></script>
+</body>
+</html>

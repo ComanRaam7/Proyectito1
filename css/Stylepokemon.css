@@ -1,0 +1,244 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #1e1e2e;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 10px;
+}
+
+.oculto {
+  display: none !important;
+}
+
+.arena {
+  background-color: #2b2b40;
+  width: 100%;
+  max-width: 680px;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 3px solid #45475a;
+}
+
+.pantalla-seleccion h2 {
+  margin: 0 0 5px 0;
+  color: #89b4fa;
+  text-align: center;
+}
+
+.subtitulo {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  color: #cdd6f4;
+  text-align: center;
+}
+
+.lista-criaturas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.tarjeta-seleccion {
+  background-color: #313244;
+  border: 2px solid #585b70;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.tarjeta-seleccion:hover {
+  transform: translateY(-4px);
+  border-color: #a6e3a1;
+}
+
+.avatar-seleccion {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 8px auto;
+  display: block;
+  image-rendering: pixelated;
+  transform: scale(1.65);
+}
+
+.stats-mini {
+  font-size: 12px;
+  color: #bac2de;
+  margin-top: 8px;
+}
+
+.campo-batalla {
+  background: linear-gradient(180deg, #3b4252 0%, #4c566a 100%);
+  border-radius: 8px;
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.hud-criatura {
+  background-color: rgba(0, 0, 0, 0.45);
+  padding: 12px 15px;
+  border-radius: 8px;
+  flex: 1;
+  max-width: 270px;
+  border-left: 4px solid #a6e3a1;
+  z-index: 2;
+}
+
+.cabecera-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.etiqueta-tipo {
+  font-size: 11px;
+  background-color: #45475a;
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.fila-rival, .fila-jugador {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.fila-jugador {
+  flex-direction: row-reverse;
+}
+
+.contenedor-sprite {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sprite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.45));
+  transform: scale(1.75);
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.anim-atacar {
+  transform: scale(1.75) translateX(15px);
+}
+
+.anim-atacar-rival {
+  transform: scale(1.75) translateX(-15px);
+}
+
+.anim-dano {
+  filter: brightness(2.5) saturate(2);
+  transform: scale(1.55);
+}
+
+.voltear {
+  transform: scaleX(-1) scale(1.75);
+}
+
+.voltear.anim-atacar {
+  transform: scaleX(-1) scale(1.75) translateX(-15px);
+}
+
+.voltear.anim-atacar-rival {
+  transform: scaleX(-1) scale(1.75) translateX(15px);
+}
+
+.voltear.anim-dano {
+  transform: scaleX(-1) scale(1.55);
+}
+
+.barra-fondo {
+  background-color: #11111b;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.barra-vida {
+  background-color: #a6e3a1;
+  height: 100%;
+  width: 100%;
+  transition: width 0.5s ease, background-color 0.4s ease;
+}
+
+.texto-hp {
+  font-size: 13px;
+  color: #cdd6f4;
+  text-align: right;
+}
+
+.caja-texto {
+  background-color: #181825;
+  border: 3px solid #89b4fa;
+  border-radius: 8px;
+  padding: 15px;
+  min-height: 75px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+}
+
+.panel-ataques {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+button {
+  background-color: #313244;
+  color: white;
+  border: 2px solid #6c7086;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #45475a;
+  border-color: #89b4fa;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-reiniciar {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #a6e3a1;
+  color: #11111b;
+  border: none;
+  display: none;
+}
