@@ -1,82 +1,127 @@
 
+/* ========================================
+   CONFIGURACIÓN GENERAL
+======================================== */
+
+:root {
+    --gris-fondo: #000000;
+    --gris-panel: #161616;
+    --gris-panel-hover: #202020;
+    --gris-borde: #303030;
+    --gris-claro: #d9d9d9;
+    --gris-oscuro: #555555;
+    --gris-texto: #ffffff;
+    --gris-secundario: #aaaaaa;
+    --primario: #64a19d;
+    --primario-hover: #50817e;
+
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ========================================
+   PÁGINA PRINCIPAL
+======================================== */
+
 body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #10172e, #202d50);
-    font-family: Arial, sans-serif;
-    color: white;
+    padding: 25px 12px;
+    background: var(--gris-fondo);
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    color: var(--gris-texto);
     overflow-x: hidden;
 }
+
+/* ========================================
+   CONTENEDOR DEL JUEGO
+======================================== */
 
 .game-wrapper {
     width: 100%;
     max-width: 460px;
     padding: 20px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 5px;
+    background: var(--gris-panel);
     text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
-/* ENCABEZADO */
+/* ========================================
+   ENCABEZADO
+======================================== */
 
 .game-header {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .game-header h1 {
-    font-size: 38px;
+    color: var(--gris-texto);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: 36px;
     font-weight: 900;
     letter-spacing: 3px;
-    color: white;
-    text-shadow: 3px 3px 0 #111c35;
+    text-transform: uppercase;
 }
 
 .game-header h1 span {
-    color: #ffb52e;
+    color: var(--primario);
 }
 
 .game-header p {
-    margin-top: 8px;
-    color: #b9c9e8;
+    margin-top: 9px;
+    color: var(--gris-secundario);
     font-size: 14px;
+    line-height: 1.5;
 }
 
-/* PUNTUACIÓN */
+/* ========================================
+   PUNTUACIÓN
+======================================== */
 
 .score-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .score-box {
-    background: #182747;
-    border: 2px solid #45638e;
-    border-radius: 10px;
-    padding: 9px 30px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+    min-width: 140px;
+    padding: 11px 30px;
+    border: 1px solid var(--gris-borde);
+    border-bottom: 3px solid var(--primario);
+    border-radius: 4px;
+    background: #202020;
 }
 
 .score-box span {
+    color: var(--gris-secundario);
     font-size: 11px;
+    font-weight: 700;
     letter-spacing: 2px;
-    color: #9db6d9;
+    text-transform: uppercase;
 }
 
 .score-box strong {
-    font-size: 27px;
-    color: #ffca45;
+    color: var(--primario);
+    font-size: 28px;
+    font-weight: 900;
 }
 
-/* ESCENARIO */
+/* ========================================
+   ESCENARIO
+======================================== */
 
 #game-container {
     position: relative;
@@ -84,46 +129,52 @@ body {
     aspect-ratio: 2 / 3;
     max-height: 600px;
     margin: auto;
-    background: linear-gradient(#68c9f0, #b7edff);
-    border: 5px solid #ffffff;
-    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 12px 30px #00000055;
+    border: 3px solid var(--primario);
+    border-radius: 4px;
+    background: linear-gradient(
+        180deg,
+        #292929,
+        #161616
+    );
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
     isolation: isolate;
     touch-action: none;
 }
 
-/* NUBES */
+/* ========================================
+   NUBES
+======================================== */
 
 .cloud {
     position: absolute;
+    z-index: 0;
     width: 85px;
     height: 27px;
     border-radius: 30px;
-    background: #ffffff99;
-    z-index: 0;
+    background: #ffffff55;
 }
 
 .cloud::before,
 .cloud::after {
-    content: "";
     position: absolute;
-    background: inherit;
     border-radius: 50%;
+    background: inherit;
+    content: "";
 }
 
 .cloud::before {
-    width: 35px;
-    height: 35px;
     top: -16px;
     left: 13px;
+    width: 35px;
+    height: 35px;
 }
 
 .cloud::after {
-    width: 45px;
-    height: 45px;
     top: -22px;
     right: 12px;
+    width: 45px;
+    height: 45px;
 }
 
 .cloud-one {
@@ -143,63 +194,75 @@ body {
     transform: scale(.65);
 }
 
-/* CUBO */
+/* ========================================
+   CUBO DEL JUGADOR
+======================================== */
 
 #bird {
     position: absolute;
+    z-index: 4;
+    top: 45%;
+    left: 22%;
     width: 36px;
     height: 36px;
-    left: 22%;
-    top: 45%;
-    background: linear-gradient(135deg, #ffcf4a, #ff7738);
-    border: 3px solid #b94c25;
-    border-radius: 7px;
-    box-shadow: 3px 4px 0 #9c472b;
-    z-index: 4;
+    border: 3px solid #427b76;
+    border-radius: 5px;
+    background: linear-gradient(
+        135deg,
+        #8ac5c0,
+        #64a19d
+    );
+    box-shadow: 3px 4px 0 #315f5b;
     transform: rotate(0deg);
 }
 
+/* Ojos del cubo */
+
 #bird::before {
-    content: "";
     position: absolute;
-    width: 6px;
-    height: 6px;
-    background: #27334a;
-    border-radius: 50%;
     top: 8px;
     left: 7px;
-    box-shadow: 12px 0 #27334a;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #161616;
+    box-shadow: 12px 0 #161616;
+    content: "";
 }
 
-/* CONTENEDOR DE OBSTÁCULOS */
+/* ========================================
+   CONTENEDOR DE OBSTÁCULOS
+======================================== */
 
 #obstacles {
     position: absolute;
-    inset: 0;
     z-index: 2;
+    inset: 0;
     pointer-events: none;
 }
 
-/* OBSTÁCULOS */
+/* ========================================
+   OBSTÁCULOS
+======================================== */
 
 .pipe-pair {
     position: absolute;
     top: 0;
-    left: 0;
     bottom: 38px;
+    left: 0;
     width: 66px;
 }
 
 .pipe {
     position: absolute;
     width: 100%;
+    border: 3px solid #444444;
     background: linear-gradient(
         90deg,
-        #168c47,
-        #38d66e 50%,
-        #168c47
+        #494949,
+        #858585 50%,
+        #494949
     );
-    border: 3px solid #106139;
 }
 
 .pipe.top {
@@ -211,21 +274,23 @@ body {
     border-radius: 5px 5px 0 0;
 }
 
+/* Bordes decorativos */
+
 .pipe.top::after,
 .pipe.bottom::after {
-    content: "";
     position: absolute;
     left: -7px;
     width: 74px;
     height: 17px;
+    border: 3px solid #444444;
+    border-radius: 4px;
     background: linear-gradient(
         90deg,
-        #168c47,
-        #48e880,
-        #168c47
+        #505050,
+        #a0a0a0,
+        #505050
     );
-    border: 3px solid #106139;
-    border-radius: 4px;
+    content: "";
     box-sizing: border-box;
 }
 
@@ -237,110 +302,206 @@ body {
     top: 0;
 }
 
-/* SUELO */
+/* ========================================
+   SUELO
+======================================== */
 
 .ground {
     position: absolute;
+    z-index: 5;
     bottom: 0;
     width: 100%;
     height: 38px;
+    border-top: 5px solid var(--primario);
     background: repeating-linear-gradient(
         90deg,
-        #d6ad57 0px,
-        #d6ad57 25px,
-        #bb8c3a 25px,
-        #bb8c3a 50px
+        #424242 0px,
+        #424242 25px,
+        #303030 25px,
+        #303030 50px
     );
-    border-top: 5px solid #66bd48;
-    z-index: 5;
 }
 
-/* MENÚ Y GAME OVER */
+/* ========================================
+   MENÚ Y GAME OVER
+======================================== */
 
 .overlay {
     position: absolute;
+    z-index: 10;
     inset: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 16px;
-    background: #102344aa;
-    z-index: 10;
     padding: 20px;
+    background: rgba(0, 0, 0, 0.84);
 }
 
 .overlay h2 {
-    color: #ffca45;
-    font-size: 30px;
+    color: var(--primario);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: 29px;
     font-weight: 900;
-    text-shadow: 3px 3px 0 #704322;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #284d4a;
+    text-transform: uppercase;
 }
 
 .overlay p {
+    color: var(--gris-secundario);
     font-size: 14px;
-    color: white;
+    line-height: 1.5;
 }
+
+/* ========================================
+   BOTONES DEL MENÚ
+======================================== */
 
 .overlay button {
     padding: 13px 40px;
-    background: #ffb52e;
-    border: 3px solid #d17d20;
-    border-radius: 8px;
-    color: #252b3d;
-    font-size: 18px;
-    font-weight: bold;
+    border: 1px solid var(--primario);
+    border-radius: 4px;
+    background: var(--primario);
+    color: #ffffff;
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 5px 0 #995b1c;
-    transition: .15s;
+    box-shadow: 0 4px 0 #3f716d;
+    transition: all .2s ease;
 }
 
 .overlay button:hover {
+    border-color: var(--primario-hover);
+    background: var(--primario-hover);
     transform: translateY(-3px);
-    background: #ffcf57;
+    box-shadow: 0 6px 0 #3f716d;
 }
 
 .overlay button:active {
-    transform: translateY(3px);
-    box-shadow: 0 2px 0 #995b1c;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #3f716d;
 }
 
-/* OCULTAR MENÚ */
+.overlay button:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* ========================================
+   OCULTAR MENÚ
+======================================== */
 
 .hidden {
     display: none !important;
 }
 
-/* CONTROLES */
+/* ========================================
+   CONTROLES
+======================================== */
 
 .controls {
     margin-top: 20px;
+    padding: 12px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 4px;
+    background: #111111;
 }
 
 .controls p {
-    font-size: 14px;
-    font-weight: bold;
+    color: var(--primario);
+    font-size: 13px;
+    font-weight: 700;
     letter-spacing: 2px;
-    color: #ffca45;
+    text-transform: uppercase;
 }
 
 .controls span {
     display: block;
-    margin-top: 7px;
+    margin-top: 8px;
+    color: var(--gris-secundario);
     font-size: 12px;
-    color: #aebdd8;
+    line-height: 1.5;
 }
 
-/* RESPONSIVE */
+/* ========================================
+   RESPONSIVE - TABLETS
+======================================== */
+
+@media (max-width: 768px) {
+
+    .game-wrapper {
+        padding: 18px;
+    }
+
+}
+
+/* ========================================
+   RESPONSIVE - MÓVILES
+======================================== */
 
 @media (max-width: 480px) {
 
+    body {
+        padding: 12px 8px;
+    }
+
     .game-wrapper {
-        padding: 12px;
+        padding: 14px 10px;
     }
 
     .game-header h1 {
-        font-size: 30px;
+        font-size: 29px;
+        letter-spacing: 2px;
     }
 
+    .game-header p {
+        font-size: 12px;
+    }
+
+    .score-box {
+        padding: 9px 25px;
+    }
+
+    .score-box strong {
+        font-size: 24px;
+    }
+
+    #game-container {
+        border-width: 2px;
+    }
+
+    .overlay {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .overlay h2 {
+        font-size: 23px;
+    }
+
+    .overlay p {
+        font-size: 12px;
+    }
+
+    .overlay button {
+        padding: 11px 28px;
+        font-size: 14px;
+    }
+
+    .controls {
+        margin-top: 15px;
+    }
+
+    .controls p {
+        font-size: 12px;
+    }
+
+    .controls span {
+        font-size: 11px;
+    }
 }

@@ -1,117 +1,246 @@
 
-/* Configuración general */
+/* ========================================
+   CONFIGURACIÓN GENERAL
+======================================== */
+
+:root {
+    --gris-fondo: #000000;
+    --gris-panel: #161616;
+    --gris-casilla: #292929;
+    --gris-casilla-hover: #383838;
+    --gris-borde: #303030;
+    --gris-texto: #ffffff;
+    --gris-secundario: #aaaaaa;
+    --primario: #64a19d;
+    --primario-hover: #50817e;
+
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    color: var(--gris-texto);
+    background: var(--gris-fondo);
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-/* Estilos principales de la página */
+/* ========================================
+   PÁGINA PRINCIPAL
+======================================== */
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f0f0f0;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
-    overflow: hidden;
-    font-family: 'Arial', sans-serif;
+    padding: 40px 15px;
+    background: var(--gris-fondo);
+    color: var(--gris-texto);
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Contenedor principal */
-.container {
+/* ========================================
+   CONTENEDOR DEL JUEGO
+======================================== */
+
+/* Agregar la clase game-container al contenedor
+   para evitar conflictos con Bootstrap. */
+
+.game-container {
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: auto;
+    width: min(100%, 680px);
+    margin: 30px auto;
+    padding: 30px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 5px;
+    background: var(--gris-panel);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
-/* Tablero del juego */
-table {
+/* ========================================
+   TABLERO DEL JUEGO
+======================================== */
+
+.game-container table {
+    width: 100%;
+    max-width: 480px;
+    table-layout: fixed;
     border-collapse: collapse;
     margin: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 4px solid #303030;
+    background: #202020;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
 }
 
-/* Casillas del tablero */
-td {
-    background-color: #4a4a4a;
-    border: 5px solid #fff;
-    font-size: 80px;
-    color: #fff;
+/* ========================================
+   CASILLAS
+======================================== */
+
+.game-container td {
+    position: relative;
+    width: 33.333%;
+    height: clamp(90px, 18vw, 150px);
+    border: 4px solid #111111;
+    background-color: var(--gris-casilla);
+    color: var(--gris-texto);
+    font-size: clamp(45px, 10vw, 80px);
     text-align: center;
     vertical-align: middle;
-    width: 150px;
-    height: 150px;
-    transition: background-color 0.3s;
-    position: relative;
+    cursor: pointer;
     perspective: 1000px;
+    transition: background-color 0.25s ease;
 }
 
-/* Efecto al pasar el cursor sobre las casillas */
-td:hover {
-    background-color: #5a5a5a;
+.game-container td:hover {
+    background-color: var(--gris-casilla-hover);
 }
 
-/* Configuración de las imágenes de las fichas */
-td.x::before,
-td.o::before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
+/* ========================================
+   FICHAS X Y O
+======================================== */
+
+.game-container td.x::before,
+.game-container td.o::before {
     position: absolute;
     top: 0;
     left: 0;
-    background-size: contain;
+    display: block;
+    width: 100%;
+    height: 100%;
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    content: "";
+    pointer-events: none;
 }
 
-/* Imagen de la ficha X */
-td.x::before {
+/* Ficha X */
+
+.game-container td.x::before {
     background-image: url('path/to/x-image.png');
-    /* Reemplazar con la ruta de la imagen 3D de X */
 }
 
-/* Imagen de la ficha O */
-td.o::before {
+/* Ficha O */
+
+.game-container td.o::before {
     background-image: url('path/to/o-image.png');
-    /* Reemplazar con la ruta de la imagen 3D de O */
 }
 
-/* Información del jugador y turno actual */
+/* ========================================
+   INFORMACIÓN DEL JUGADOR
+======================================== */
+
 #player {
-    padding: 1rem;
+    width: 100%;
+    margin: 0 auto 25px;
+    padding: 18px;
+    border-left: 4px solid var(--primario);
+    background: #111111;
+    color: var(--gris-texto);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-align: center;
-    font-size: 1.5rem;
-    color: #333;
+    text-transform: uppercase;
 }
 
-/* Tema oscuro */
+/* ========================================
+   TEMA OSCURO
+======================================== */
+
 .dark {
-    background: #333;
-    color: #f0f0f0;
+    background: #000000;
+    color: #ffffff;
 }
 
-/* Casillas en el tema oscuro */
-.dark td {
-    background-color: #666;
-    border-color: #444;
+.dark .game-container {
+    border-color: var(--gris-borde);
+    background: var(--gris-panel);
 }
 
-/* Tema claro */
+.dark .game-container td {
+    border-color: #111111;
+    background-color: #292929;
+}
+
+.dark .game-container td:hover {
+    background-color: #383838;
+}
+
+/* ========================================
+   TEMA CLARO
+======================================== */
+
 .light {
-    background: #fff;
-    color: #333;
+    background: #e5e5e5;
+    color: #222222;
 }
 
-/* Casillas en el tema claro */
-.light td {
-    background-color: #ddd;
-    border-color: #bbb;
+.light .game-container {
+    border-color: #cccccc;
+    background: #ffffff;
+}
+
+.light #player {
+    background: #eeeeee;
+    color: #222222;
+}
+
+.light .game-container td {
+    border-color: #ffffff;
+    background-color: #d0d0d0;
+    color: #222222;
+}
+
+.light .game-container td:hover {
+    background-color: #bcbcbc;
+}
+
+/* ========================================
+   RESPONSIVE - TABLETS
+======================================== */
+
+@media (max-width: 768px) {
+    body {
+        padding: 25px 12px;
+    }
+
+    .game-container {
+        width: min(100%, 580px);
+        padding: 22px;
+        margin: 20px auto;
+    }
+
+    .game-container table {
+        max-width: 100%;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MÓVILES
+======================================== */
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .game-container {
+        padding: 15px 10px;
+        margin: 15px auto;
+    }
+
+    .game-container td {
+        height: clamp(85px, 25vw, 115px);
+        border-width: 3px;
+    }
+
+    #player {
+        margin-bottom: 18px;
+        padding: 14px 8px;
+        font-size: 0.95rem;
+    }
 }

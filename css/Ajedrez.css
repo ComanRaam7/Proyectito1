@@ -1,14 +1,19 @@
-@font-face {
-    font-family: "ev";
-    src: url("../fonts/CloisterBlack.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}
 
 :root {
-    font-family: Arial, sans-serif;
-    color: #202020;
-    background: #ececec;
+    --gris-fondo: #000000;
+    --gris-panel: #161616;
+    --gris-panel-hover: #202020;
+    --gris-borde: #303030;
+    --gris-claro: #d9d9d9;
+    --gris-oscuro: #555555;
+    --blanco: #ffffff;
+    --texto-secundario: #aaaaaa;
+    --primario: #64a19d;
+    --primario-hover: #50817e;
+
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    color: var(--blanco);
+    background: var(--gris-fondo);
     font-synthesis: none;
 }
 
@@ -19,66 +24,84 @@
 body {
     min-height: 100vh;
     margin: 0;
-    padding: 24px;
-    background: linear-gradient(135deg, #eeeeee, #d8d8d8);
+    padding: 0 20px;
+    color: var(--blanco);
+    background: #000000;
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
 }
 
 button {
     font: inherit;
 }
 
+/* CONTENEDOR PRINCIPAL */
+
 .contenedor-juego {
     width: min(1120px, 100%);
-    margin: 0 auto;
-    padding: 24px;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 6px;
+    background: var(--gris-panel);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
+/* ENCABEZADO */
+
 .encabezado {
-    margin-bottom: 22px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
 .encabezado h1 {
-    margin: 0 0 8px;
-    font-family: "ev", Georgia, serif;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    font-weight: normal;
+    margin: 0 0 12px;
+    color: var(--blanco);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 .encabezado p {
     margin: 0;
-    color: #555;
+    color: var(--texto-secundario);
+    font-size: 1rem;
+    letter-spacing: 0.5px;
 }
+
+/* DISTRIBUCIÓN DEL JUEGO */
 
 .contenido-juego {
     display: grid;
     grid-template-columns: minmax(280px, 640px) minmax(230px, 1fr);
     align-items: start;
-    gap: 24px;
+    gap: 28px;
 }
 
 .zona-tablero {
     width: 100%;
 }
 
+/* TABLERO */
+
 #tablero {
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
-    /* Mantiene las ocho filas del tablero con la misma altura. */
     grid-template-rows: repeat(8, minmax(0, 1fr));
     width: min(100%, 640px);
     aspect-ratio: 1 / 1;
     margin: 0 auto;
     overflow: hidden;
-    border: 6px solid #29221d;
-    border-radius: 4px;
-    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
+    border: 5px solid #303030;
+    border-radius: 3px;
+    background: #303030;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
     user-select: none;
     -webkit-user-select: none;
 }
+
+/* CASILLAS */
 
 .casilla {
     position: relative;
@@ -92,25 +115,28 @@ button {
     border-radius: 0;
     cursor: pointer;
     touch-action: manipulation;
+    transition: filter 0.15s ease;
 }
 
 .casilla.blanca {
-    background: #e5d6b8;
+    background: #d9d9d9;
 }
 
 .casilla.negra {
-    background: #80664c;
+    background: #555555;
 }
 
 .casilla:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.15);
 }
 
 .casilla:focus-visible {
     z-index: 2;
-    outline: 3px solid #ffdf59;
+    outline: 3px solid var(--primario);
     outline-offset: -3px;
 }
+
+/* PIEZAS */
 
 .ficha {
     position: relative;
@@ -128,8 +154,8 @@ button {
     -webkit-user-drag: none;
 }
 
-/* Fuerza a cada imagen a permanecer dentro de su casilla.
-   Evita que estilos antiguos de .ficha agranden o desplacen las piezas. */
+/* Mantiene las piezas dentro de cada casilla */
+
 #tablero .casilla > img.ficha {
     position: static !important;
     display: block !important;
@@ -144,13 +170,15 @@ button {
     transform: none !important;
 }
 
+/* ESTADOS DEL TABLERO */
+
 .casilla.seleccionada {
     z-index: 2;
-    box-shadow: inset 0 0 0 5px #f4d03f;
+    box-shadow: inset 0 0 0 5px var(--primario);
 }
 
 .casilla.ultima-jugada {
-    box-shadow: inset 0 0 0 4px rgba(40, 180, 99, 0.75);
+    box-shadow: inset 0 0 0 4px rgba(100, 161, 157, 0.85);
 }
 
 .casilla.movimiento-posible::after {
@@ -158,17 +186,19 @@ button {
     width: 22%;
     height: 22%;
     border-radius: 50%;
-    background: rgba(20, 20, 20, 0.38);
+    background: rgba(20, 20, 20, 0.48);
     content: "";
 }
 
 .casilla.captura-posible::after {
     position: absolute;
     inset: 6%;
-    border: 5px solid rgba(210, 55, 45, 0.78);
+    border: 5px solid rgba(220, 75, 75, 0.85);
     border-radius: 50%;
     content: "";
 }
+
+/* PANEL LATERAL */
 
 .panel-lateral {
     display: flex;
@@ -177,44 +207,57 @@ button {
 }
 
 .panel {
-    padding: 16px;
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    background: #f7f7f7;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+    padding: 20px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 5px;
+    background: var(--gris-panel-hover);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .panel h2 {
-    margin: 0 0 12px;
-    font-size: 1.05rem;
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gris-borde);
+    color: var(--blanco);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
+/* PANEL DE TURNOS */
+
 .turnos {
-    color: #fff;
-    background: linear-gradient(135deg, #3b3028, #181818);
+    border-left: 4px solid var(--primario);
+    color: var(--blanco);
+    background: #111111;
 }
 
 .turnos h2 {
-    color: #e9c98b;
+    color: var(--primario);
 }
 
 #mensaje-turno {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
+    color: var(--blanco);
     font-size: 1.1rem;
     font-weight: 700;
 }
 
 .estado-partida {
     margin: 0;
-    color: #e2e2e2;
+    color: var(--texto-secundario);
     font-size: 0.92rem;
-    line-height: 1.4;
+    line-height: 1.5;
 }
+
+/* PIEZAS CAPTURADAS */
 
 #lista-capturas {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
     min-height: 44px;
 }
 
@@ -224,19 +267,34 @@ button {
     object-fit: contain;
 }
 
+/* BOTÓN REINICIAR */
+
 .boton-reiniciar {
-    padding: 12px 16px;
-    border: 0;
-    border-radius: 8px;
-    color: #fff;
-    background: #315c8c;
+    padding: 13px 18px;
+    border: 1px solid var(--primario);
+    border-radius: 4px;
+    color: #ffffff;
+    background: var(--primario);
+    font-size: 0.9rem;
     font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
+    transition: all 0.25s ease;
 }
 
 .boton-reiniciar:hover {
-    background: #24486f;
+    border-color: var(--primario-hover);
+    color: #ffffff;
+    background: var(--primario-hover);
 }
+
+.boton-reiniciar:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* VENTANA DE CORONACIÓN */
 
 .selector-coronacion {
     position: fixed;
@@ -245,7 +303,7 @@ button {
     display: grid;
     place-items: center;
     padding: 18px;
-    background: rgba(0, 0, 0, 0.68);
+    background: rgba(0, 0, 0, 0.85);
 }
 
 .oculto {
@@ -254,26 +312,35 @@ button {
 
 .contenido-coronacion {
     width: min(460px, 100%);
-    padding: 22px;
-    border-radius: 12px;
-    background: #fff;
+    padding: 28px;
+    border: 1px solid var(--gris-borde);
+    border-top: 4px solid var(--primario);
+    border-radius: 5px;
+    color: var(--blanco);
+    background: #161616;
     text-align: center;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
 }
 
 .contenido-coronacion h2 {
-    margin: 0 0 8px;
+    margin: 0 0 12px;
+    color: var(--blanco);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .contenido-coronacion p {
-    color: #555;
+    color: var(--texto-secundario);
+    font-size: 0.95rem;
 }
 
 .opciones-coronacion {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    margin-top: 18px;
+    margin-top: 22px;
 }
 
 .opciones-coronacion button {
@@ -281,16 +348,18 @@ button {
     place-items: center;
     min-width: 0;
     aspect-ratio: 1 / 1;
-    border: 2px solid #bbb;
-    border-radius: 8px;
-    background: #f1f1f1;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    background: #252525;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .opciones-coronacion button:hover,
 .opciones-coronacion button:focus-visible {
-    border-color: #315c8c;
-    background: #e2ebf5;
+    border-color: var(--primario);
+    background: #343434;
+    outline: none;
 }
 
 .opciones-coronacion img {
@@ -299,13 +368,16 @@ button {
     object-fit: contain;
 }
 
+/* RESPONSIVE TABLETS */
+
 @media (max-width: 820px) {
     body {
-        padding: 12px;
+        padding: 0 12px;
     }
 
     .contenedor-juego {
-        padding: 16px;
+        margin: 30px auto;
+        padding: 20px;
     }
 
     .contenido-juego {
@@ -326,9 +398,21 @@ button {
     }
 }
 
+/* RESPONSIVE MÓVILES */
+
 @media (max-width: 480px) {
     .contenedor-juego {
-        padding: 10px;
+        margin: 20px auto;
+        padding: 12px;
+    }
+
+    .encabezado {
+        margin-bottom: 20px;
+    }
+
+    .encabezado h1 {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
     }
 
     #tablero {
@@ -348,6 +432,10 @@ button {
     }
 
     .panel {
-        padding: 12px;
+        padding: 15px;
+    }
+
+    .contenido-coronacion {
+        padding: 20px;
     }
 }

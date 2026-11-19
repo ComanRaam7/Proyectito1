@@ -1,14 +1,34 @@
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
 const scoreElement = document.getElementById("score");
 const overlay = document.getElementById("overlay");
 const message = document.getElementById("message");
 const instruction = document.getElementById("instruction");
 const startButton = document.getElementById("startButton");
 
+// ========================================
+// PALETA DE COLORES GRAYSCALE
+// ========================================
+
+const COLORS = {
+    background: "#191919",
+    grid: "#292929",
+    ground: "#303030",
+    accent: "#64a19d",
+    player: "#64a19d",
+    playerEyes: "#161616",
+    obstacle: "#777777",
+    obstacleBorder: "#d9d9d9"
+};
+
 const ground = 250;
 
-// Jugador
+// ========================================
+// JUGADOR
+// ========================================
+
 const player = {
     x: 80,
     y: 208,
@@ -20,7 +40,10 @@ const player = {
     rotation: 0
 };
 
-// Variables del juego
+// ========================================
+// VARIABLES DEL JUEGO
+// ========================================
+
 let obstacles = [];
 let score = 0;
 let speed = 370;
@@ -29,13 +52,18 @@ let nextSpawn = 1.3;
 let lastTime = 0;
 let gameState = "ready";
 
-// Fondo
+// ========================================
+// DIBUJAR FONDO
+// ========================================
+
 function drawBackground() {
-    ctx.fillStyle = "#171733";
+
+    // Fondo principal
+    ctx.fillStyle = COLORS.background;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Cuadrícula
-    ctx.strokeStyle = "#29294d";
+    ctx.strokeStyle = COLORS.grid;
     ctx.lineWidth = 1;
 
     for (let x = 0; x < canvas.width; x += 40) {
@@ -53,15 +81,20 @@ function drawBackground() {
     }
 
     // Suelo
-    ctx.fillStyle = "#30305d";
+    ctx.fillStyle = COLORS.ground;
     ctx.fillRect(0, ground, canvas.width, 50);
 
-    ctx.fillStyle = "#00eaff";
+    // Línea superior del suelo
+    ctx.fillStyle = COLORS.accent;
     ctx.fillRect(0, ground, canvas.width, 4);
 }
 
-// Dibujar jugador
+// ========================================
+// DIBUJAR JUGADOR
+// ========================================
+
 function drawPlayer() {
+
     ctx.save();
 
     ctx.translate(
@@ -71,7 +104,9 @@ function drawPlayer() {
 
     ctx.rotate(player.rotation);
 
-    ctx.fillStyle = "#00eaff";
+    // Cuerpo del jugador
+    ctx.fillStyle = COLORS.player;
+
     ctx.fillRect(
         -player.size / 2,
         -player.size / 2,
@@ -80,15 +115,20 @@ function drawPlayer() {
     );
 
     // Ojos del cubo
-    ctx.fillStyle = "#171733";
+    ctx.fillStyle = COLORS.playerEyes;
+
     ctx.fillRect(-9, -8, 7, 7);
     ctx.fillRect(5, -8, 7, 7);
 
     ctx.restore();
 }
 
-// Crear obstáculos
+// ========================================
+// CREAR OBSTÁCULOS
+// ========================================
+
 function createObstacle() {
+
     const height = 38;
 
     obstacles.push({
@@ -99,33 +139,48 @@ function createObstacle() {
     });
 }
 
-// Dibujar obstáculos
+// ========================================
+// DIBUJAR OBSTÁCULOS
+// ========================================
+
 function drawObstacles() {
+
     obstacles.forEach(obstacle => {
-        ctx.fillStyle = "#ff3864";
+
+        ctx.fillStyle = COLORS.obstacle;
 
         ctx.beginPath();
+
         ctx.moveTo(obstacle.x, ground);
+
         ctx.lineTo(
             obstacle.x + obstacle.width / 2,
             obstacle.y
         );
+
         ctx.lineTo(
             obstacle.x + obstacle.width,
             ground
         );
+
         ctx.closePath();
 
         ctx.fill();
 
-        ctx.strokeStyle = "#ffffff";
+        // Borde del obstáculo
+        ctx.strokeStyle = COLORS.obstacleBorder;
         ctx.lineWidth = 2;
+
         ctx.stroke();
     });
 }
 
-// Saltar
+// ========================================
+// SALTAR
+// ========================================
+
 function jump() {
+
     if (gameState === "ready") {
         startGame();
     }
@@ -133,37 +188,52 @@ function jump() {
     if (gameState !== "playing") return;
 
     if (player.grounded) {
+
         player.velocityY = player.jumpForce;
         player.grounded = false;
     }
 }
 
-// Actualizar jugador
+// ========================================
+// ACTUALIZAR JUGADOR
+// ========================================
+
 function updatePlayer(delta) {
+
     player.velocityY += player.gravity * delta;
     player.y += player.velocityY * delta;
 
     if (player.y + player.size >= ground) {
+
         player.y = ground - player.size;
         player.velocityY = 0;
         player.grounded = true;
         player.rotation = 0;
+
     } else {
+
         player.rotation += 5 * delta;
     }
 }
 
-// Actualizar obstáculos
+// ========================================
+// ACTUALIZAR OBSTÁCULOS
+// ========================================
+
 function updateObstacles(delta) {
+
     spawnTimer += delta;
 
     if (spawnTimer >= nextSpawn) {
+
         createObstacle();
+
         spawnTimer = 0;
         nextSpawn = 1.1 + Math.random() * 0.7;
     }
 
     obstacles.forEach(obstacle => {
+
         obstacle.x -= speed * delta;
     });
 
@@ -172,23 +242,33 @@ function updateObstacles(delta) {
     );
 }
 
-// Detectar colisiones
+// ========================================
+// DETECTAR COLISIONES
+// ========================================
+
 function checkCollision() {
+
     for (const obstacle of obstacles) {
+
         const collision =
             player.x + player.size - 7 > obstacle.x + 7 &&
             player.x + 7 < obstacle.x + obstacle.width - 7 &&
             player.y + player.size - 5 > obstacle.y + 10;
 
         if (collision) {
+
             endGame();
             return;
         }
     }
 }
 
-// Actualizar puntuación
+// ========================================
+// ACTUALIZAR PUNTUACIÓN
+// ========================================
+
 function updateScore(delta) {
+
     score += delta * 10;
 
     scoreElement.textContent = Math.floor(score);
@@ -197,19 +277,29 @@ function updateScore(delta) {
     speed = Math.min(370 + score * 1.5, 650);
 }
 
-// Dibujar todo
+// ========================================
+// DIBUJAR TODO
+// ========================================
+
 function draw() {
+
     drawBackground();
     drawPlayer();
     drawObstacles();
 }
 
-// Bucle principal
+// ========================================
+// BUCLE PRINCIPAL
+// ========================================
+
 function gameLoop(timestamp) {
+
     const delta = Math.min((timestamp - lastTime) / 1000, 0.033);
+
     lastTime = timestamp;
 
     if (gameState === "playing") {
+
         updatePlayer(delta);
         updateObstacles(delta);
         updateScore(delta);
@@ -221,14 +311,19 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
-// Iniciar partida
+// ========================================
+// INICIAR PARTIDA
+// ========================================
+
 function startGame() {
+
     player.y = ground - player.size;
     player.velocityY = 0;
     player.grounded = true;
     player.rotation = 0;
 
     obstacles = [];
+
     score = 0;
     speed = 370;
     spawnTimer = 0;
@@ -237,14 +332,20 @@ function startGame() {
     scoreElement.textContent = "0";
 
     gameState = "playing";
+
     overlay.style.display = "none";
 }
 
-// Finalizar partida
+// ========================================
+// FINALIZAR PARTIDA
+// ========================================
+
 function endGame() {
+
     gameState = "gameover";
 
     message.textContent = "¡GAME OVER!";
+
     instruction.textContent =
         "Puntuación final: " + Math.floor(score);
 
@@ -253,31 +354,51 @@ function endGame() {
     overlay.style.display = "flex";
 }
 
-// Botón de inicio y reinicio
+// ========================================
+// BOTÓN DE INICIO Y REINICIO
+// ========================================
+
 startButton.addEventListener("click", startGame);
 
-// Controles del teclado
+// ========================================
+// CONTROLES DEL TECLADO
+// ========================================
+
 document.addEventListener("keydown", function(event) {
+
     if (event.code === "Space" || event.code === "ArrowUp") {
+
         event.preventDefault();
 
         if (!event.repeat) {
+
             if (gameState === "gameover") {
+
                 startGame();
+
             } else {
+
                 jump();
             }
         }
     }
 });
 
-// Control con clic o pantalla táctil
+// ========================================
+// CONTROL CON CLIC O PANTALLA TÁCTIL
+// ========================================
+
 canvas.addEventListener("pointerdown", function() {
+
     jump();
 });
+
+// ========================================
+// INICIAR ANIMACIÓN
+// ========================================
 
 // Dibujar pantalla inicial
 draw();
 
-// Iniciar animación
+// Iniciar bucle del juego
 requestAnimationFrame(gameLoop);

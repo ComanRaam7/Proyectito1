@@ -145,14 +145,5 @@ function realizarJugada(evento) {
             'Turno del jugador ' + turno;
     }
 }
-
-// Cambiar entre el tema claro y oscuro
-document.getElementById('theme-switch').addEventListener(
-    'change',
-    function() {
-        document.body.classList.toggle('dark', this.checked);
-    }
-);
-
 // Iniciar el juego
 inicializarJuego();

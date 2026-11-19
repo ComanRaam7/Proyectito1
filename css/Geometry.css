@@ -1,102 +1,250 @@
+
+/* ========================================
+   CONFIGURACIÓN GENERAL
+======================================== */
+
+:root {
+    --gris-fondo: #000000;
+    --gris-panel: #161616;
+    --gris-panel-hover: #202020;
+    --gris-borde: #303030;
+    --gris-texto: #ffffff;
+    --gris-secundario: #aaaaaa;
+    --primario: #64a19d;
+    --primario-hover: #50817e;
+
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    color: var(--gris-texto);
+    background: var(--gris-fondo);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ========================================
+   PÁGINA PRINCIPAL
+======================================== */
+
 body {
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #101020;
-    font-family: Arial, sans-serif;
-    color: white;
+    padding: 40px 15px;
+    background: var(--gris-fondo);
+    color: var(--gris-texto);
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
 }
+
+/* ========================================
+   CONTENEDOR DEL JUEGO
+======================================== */
 
 .game-container {
-    width: 90%;
-    max-width: 950px;
+    width: min(950px, 100%);
+    margin: 30px auto;
+    padding: 30px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 5px;
+    background: var(--gris-panel);
     text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
-h1 {
-    color: #00eaff;
-    font-size: 38px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 15px #00eaff;
+/* ========================================
+   TÍTULO
+======================================== */
+
+.game-container h1 {
+    margin-bottom: 18px;
+    color: var(--gris-texto);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
-.score {
-    font-size: 20px;
-    margin-bottom: 12px;
+/* ========================================
+   PUNTUACIÓN
+======================================== */
+
+.game-container .score {
+    margin-bottom: 18px;
+    color: var(--primario);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-.game {
-    width: 100%;
+/* ========================================
+   ÁREA DEL JUEGO
+======================================== */
+
+.game-container .game {
     position: relative;
-    border: 3px solid #00eaff;
-    border-radius: 10px;
+    width: 100%;
     overflow: hidden;
-    box-shadow: 0 0 20px #00eaff55;
+    border: 3px solid var(--primario);
+    border-radius: 4px;
+    background: #111111;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
 }
 
-canvas {
+/* ========================================
+   CANVAS
+======================================== */
+
+.game-container canvas {
     display: block;
     width: 100%;
     height: auto;
-    background: #171733;
+    background: #191919;
 }
 
-.overlay {
+/* ========================================
+   PANTALLA DE INICIO Y GAME OVER
+======================================== */
+
+.game-container .overlay {
     position: absolute;
+    z-index: 5;
     inset: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #080819bb;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.86);
+    text-align: center;
 }
 
-.overlay h2 {
-    font-size: 32px;
-    color: #00eaff;
-    margin-bottom: 10px;
+.game-container .overlay h2 {
+    margin-bottom: 14px;
+    color: var(--primario);
+    font-family: "Montserrat", "Varela Round", sans-serif;
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.overlay p {
-    margin-bottom: 20px;
+.game-container .overlay p {
+    margin-bottom: 22px;
+    color: var(--gris-secundario);
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
-button {
+/* ========================================
+   BOTONES
+======================================== */
+
+.game-container button {
     padding: 13px 35px;
-    border: none;
-    border-radius: 8px;
-    background: #00eaff;
-    color: #101020;
-    font-size: 18px;
-    font-weight: bold;
+    border: 1px solid var(--primario);
+    border-radius: 4px;
+    background: var(--primario);
+    color: #ffffff;
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.25s ease;
 }
 
-button:hover {
-    background: white;
-    transform: scale(1.08);
+.game-container button:hover {
+    border-color: var(--primario-hover);
+    background: var(--primario-hover);
+    transform: translateY(-2px);
 }
 
-.controls {
-    margin-top: 18px;
-    color: #aaa;
-    font-size: 14px;
+.game-container button:active {
+    transform: translateY(0);
 }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 26px;
+.game-container button:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* ========================================
+   CONTROLES
+======================================== */
+
+.game-container .controls {
+    margin-top: 20px;
+    padding: 14px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 4px;
+    background: #111111;
+    color: var(--gris-secundario);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+}
+
+/* ========================================
+   RESPONSIVE - TABLETS
+======================================== */
+
+@media (max-width: 768px) {
+    body {
+        padding: 25px 12px;
     }
 
-    .overlay h2 {
-        font-size: 24px;
+    .game-container {
+        margin: 20px auto;
+        padding: 22px;
+    }
+
+    .game-container .game {
+        border-width: 2px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MÓVILES
+======================================== */
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .game-container {
+        margin: 15px auto;
+        padding: 15px 10px;
+    }
+
+    .game-container h1 {
+        font-size: 25px;
+        letter-spacing: 2px;
+    }
+
+    .game-container .overlay {
+        padding: 10px;
+    }
+
+    .game-container .overlay h2 {
+        font-size: 22px;
+    }
+
+    .game-container .overlay p {
+        margin-bottom: 12px;
+        font-size: 0.85rem;
+    }
+
+    .game-container button {
+        padding: 10px 22px;
+        font-size: 0.85rem;
+    }
+
+    .game-container .controls {
+        margin-top: 14px;
+        padding: 10px;
+        font-size: 0.8rem;
     }
 }
