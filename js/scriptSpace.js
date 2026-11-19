@@ -1,218 +1,430 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const grade = document.getElementById("grade");
-    const pontuacao = document.getElementById("pontuacao");
-    const oleadaDisplay = document.getElementById("oleada");
-    const gameOverPanel = document.getElementById("game-over-panel");
-    const btnReiniciar = document.getElementById("reiniciar");
 
-    const tamanho = 15; // Cuadrícula 15x15
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ELEMENTOS DEL HTML
+
+    const cuadricula = document.getElementById("grade");
+    const elementoPuntuacion = document.getElementById("pontuacao");
+    const elementoOleada = document.getElementById("oleada");
+    const panelFinJuego = document.getElementById("game-over-panel");
+    const botonReiniciar = document.getElementById("reiniciar");
+
+    // CONFIGURACIÓN DEL JUEGO
+
+    const tamanoCuadricula = 15;
+
     const formacionInicial = [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
         15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
         30, 31, 32, 33, 34, 35, 36, 37, 38, 39
     ];
 
-    // Crear las 225 celdas una sola vez
-    grade.innerHTML = "";
-    for (let i = 0; i < tamanho * tamanho; i++) {
-        let quadrado = document.createElement("div");
-        grade.appendChild(quadrado);
+    // Crear las 225 celdas una sola vez.
+
+    cuadricula.innerHTML = "";
+
+    for (let i = 0; i < tamanoCuadricula * tamanoCuadricula; i++) {
+
+        const celda = document.createElement("div");
+
+        cuadricula.appendChild(celda);
     }
 
-    const quadrados = document.querySelectorAll("#grade div");
+    const celdas = document.querySelectorAll("#grade div");
 
-    // Variables de estado del juego
+    // VARIABLES DEL JUEGO
+
     let invasores = [];
-    let posicaoJogador = 202;
-    let direcao = 1;
-    let descer = false;
-    let invasoresId = null;
-    let atingidos = [];
-    let pontos = 0;
+    let posicionJugador = 202;
+    let direccion = 1;
+    let debeBajar = false;
+    let intervaloInvasores = null;
+    let invasoresEliminados = [];
+    let puntos = 0;
     let oleada = 1;
     let velocidad = 300;
     let juegoTerminado = false;
 
+    // INICIAR JUEGO
+
     function iniciarJuego() {
-        clearInterval(invasoresId);
+
+        clearInterval(intervaloInvasores);
+
         juegoTerminado = false;
-        pontos = 0;
+        puntos = 0;
         oleada = 1;
         velocidad = 300;
-        posicaoJogador = 202;
+        posicionJugador = 202;
 
-        pontuacao.textContent = pontos;
-        oleadaDisplay.textContent = oleada;
-        gameOverPanel.style.display = "none";
+        elementoPuntuacion.textContent = puntos;
+        elementoOleada.textContent = oleada;
 
-        // Limpiar todo el tablero visualmente
-        quadrados.forEach(q => q.classList.remove("invasor", "jogador", "tiro", "KABUM"));
+        panelFinJuego.style.display = "none";
 
-        quadrados[posicaoJogador].classList.add("jogador");
+        // Limpiar el tablero visualmente.
+
+        celdas.forEach(celda => {
+
+            celda.classList.remove(
+                "invasor",
+                "jogador",
+                "tiro",
+                "KABUM"
+            );
+        });
+
+        // Mostrar al jugador en su posición inicial.
+
+        celdas[posicionJugador].classList.add("jogador");
+
         generarOleada();
     }
 
+    // GENERAR OLEADA
+
     function generarOleada() {
-        clearInterval(invasoresId);
-        
-        // Limpiar restos de naves o explosiones previas
-        quadrados.forEach(q => q.classList.remove("invasor", "KABUM"));
+
+        clearInterval(intervaloInvasores);
+
+        // Limpiar los restos de naves y explosiones anteriores.
+
+        celdas.forEach(celda => {
+
+            celda.classList.remove("invasor", "KABUM");
+        });
 
         invasores = [...formacionInicial];
-        atingidos = [];
-        direcao = 1;
-        descer = false;
 
-        invasores.forEach(invasor => {
-            quadrados[invasor].classList.add("invasor");
+        invasoresEliminados = [];
+
+        direccion = 1;
+        debeBajar = false;
+
+        // Dibujar los invasores.
+
+        invasores.forEach(posicion => {
+
+            celdas[posicion].classList.add("invasor");
         });
 
-        invasoresId = setInterval(moverInvasores, velocidad);
+        // Iniciar el movimiento automático.
+
+        intervaloInvasores = setInterval(
+            moverInvasores,
+            velocidad
+        );
     }
 
-    function moverJogador(event) {
+    // MOVER JUGADOR
+
+    function moverJugador(evento) {
+
         if (juegoTerminado) return;
 
-        // Evitar que las flechas o el espacio muevan el scroll del navegador
-        if ([32, 37, 38, 39, 40].includes(event.keyCode)) {
-            if (event.preventDefault) event.preventDefault();
-        }
+        // Evitar que las teclas muevan el desplazamiento del navegador.
 
-        quadrados[posicaoJogador].classList.remove("jogador");
+        if ([32, 37, 38, 39, 40].includes(evento.keyCode)) {
 
-        if (event.keyCode === 37) { // Izquierda
-            if (posicaoJogador % tamanho !== 0) {
-                posicaoJogador--;
-            }
-        } else if (event.keyCode === 39) { // Derecha
-            if (posicaoJogador % tamanho !== tamanho - 1) {
-                posicaoJogador++;
+            if (evento.preventDefault) {
+                evento.preventDefault();
             }
         }
 
-        quadrados[posicaoJogador].classList.add("jogador");
+        // Eliminar la posición anterior del jugador.
+
+        celdas[posicionJugador].classList.remove("jogador");
+
+        // Mover a la izquierda.
+
+        if (evento.keyCode === 37) {
+
+            if (posicionJugador % tamanoCuadricula !== 0) {
+
+                posicionJugador--;
+            }
+        }
+
+        // Mover a la derecha.
+
+        else if (evento.keyCode === 39) {
+
+            if (
+                posicionJugador % tamanoCuadricula !==
+                tamanoCuadricula - 1
+            ) {
+
+                posicionJugador++;
+            }
+        }
+
+        // Dibujar al jugador en su nueva posición.
+
+        celdas[posicionJugador].classList.add("jogador");
     }
+
+    // MOVER INVASORES
 
     function moverInvasores() {
+
         if (juegoTerminado) return;
 
-        // Calcular los extremos reales solo con los invasores que siguen vivos
-        const vivos = invasores.filter((_, idx) => !atingidos.includes(idx));
-        if (vivos.length === 0) return;
+        // Obtener únicamente los invasores que siguen vivos.
 
-        const bordaEsquerda = vivos.some(pos => pos % tamanho === 0);
-        const bordaDireita = vivos.some(pos => pos % tamanho === tamanho - 1);
+        const invasoresVivos = invasores.filter(
+            (_, indice) => !invasoresEliminados.includes(indice)
+        );
 
-        invasores.forEach(invasor => {
-            if (quadrados[invasor]) {
-                quadrados[invasor].classList.remove("invasor");
+        if (invasoresVivos.length === 0) return;
+
+        // Comprobar los extremos de la formación.
+
+        const bordeIzquierdo = invasoresVivos.some(
+            posicion => posicion % tamanoCuadricula === 0
+        );
+
+        const bordeDerecho = invasoresVivos.some(
+            posicion => posicion % tamanoCuadricula === tamanoCuadricula - 1
+        );
+
+        // Limpiar las posiciones anteriores.
+
+        invasores.forEach(posicion => {
+
+            if (celdas[posicion]) {
+
+                celdas[posicion].classList.remove("invasor");
             }
         });
 
-        if (bordaEsquerda && direcao === -1) {
-            direcao = 1;
-            descer = true;
-        } else if (bordaDireita && direcao === 1) {
-            direcao = -1;
-            descer = true;
+        // Cambiar de dirección al llegar a los bordes.
+
+        if (bordeIzquierdo && direccion === -1) {
+
+            direccion = 1;
+            debeBajar = true;
+
+        } else if (bordeDerecho && direccion === 1) {
+
+            direccion = -1;
+            debeBajar = true;
         }
 
+        // Actualizar las posiciones.
+
         for (let i = 0; i < invasores.length; i++) {
-            invasores[i] += descer ? tamanho : direcao;
+
+            invasores[i] += debeBajar
+                ? tamanoCuadricula
+                : direccion;
         }
 
-        descer = false;
+        debeBajar = false;
 
-        // Verificar derrota (si un invasor vivo toca al jugador o llega a la fila inferior)
+        // Comprobar si los invasores alcanzaron al jugador.
+
         for (let i = 0; i < invasores.length; i++) {
-            if (!atingidos.includes(i)) {
-                const pos = invasores[i];
-                if (pos >= quadrados.length - tamanho || pos === posicaoJogador) {
-                    terminarJuego();
+
+            if (!invasoresEliminados.includes(i)) {
+
+                const posicion = invasores[i];
+
+                if (
+                    posicion >= celdas.length - tamanoCuadricula ||
+                    posicion === posicionJugador
+                ) {
+
+                    finalizarJuego();
+
                     return;
                 }
-                quadrados[pos].classList.add("invasor");
+
+                // Dibujar los invasores que siguen vivos.
+
+                celdas[posicion].classList.add("invasor");
             }
         }
     }
 
-    function terminarJuego() {
+    // FINALIZAR JUEGO
+
+    function finalizarJuego() {
+
         juegoTerminado = true;
-        clearInterval(invasoresId);
-        gameOverPanel.style.display = "block";
+
+        clearInterval(intervaloInvasores);
+
+        panelFinJuego.style.display = "block";
     }
 
-    function atirar(e) {
+    // DISPARAR
+
+    function disparar(evento) {
+
         if (juegoTerminado) return;
 
-        if (e.keyCode === 32) {
-            if (e.preventDefault) e.preventDefault();
-            let posicaoTiro = posicaoJogador;
-            let tiroId = setInterval(moverTiro, 80);
+        // Comprobar si se presionó la barra espaciadora.
 
-            function moverTiro() {
+        if (evento.keyCode === 32) {
+
+            if (evento.preventDefault) {
+                evento.preventDefault();
+            }
+
+            let posicionDisparo = posicionJugador;
+
+            const intervaloDisparo = setInterval(
+                moverDisparo,
+                80
+            );
+
+            // MOVIMIENTO DEL DISPARO
+
+            function moverDisparo() {
+
                 if (juegoTerminado) {
-                    clearInterval(tiroId);
-                    quadrados[posicaoTiro].classList.remove("tiro");
+
+                    clearInterval(intervaloDisparo);
+
+                    celdas[posicionDisparo].classList.remove("tiro");
+
                     return;
                 }
 
-                quadrados[posicaoTiro].classList.remove("tiro");
-                posicaoTiro -= tamanho;
+                // Eliminar la posición anterior del disparo.
 
-                // Si el disparo sale por arriba del tablero
-                if (posicaoTiro < 0) {
-                    clearInterval(tiroId);
+                celdas[posicionDisparo].classList.remove("tiro");
+
+                // Avanzar una fila hacia arriba.
+
+                posicionDisparo -= tamanoCuadricula;
+
+                // Comprobar si el disparo salió del tablero.
+
+                if (posicionDisparo < 0) {
+
+                    clearInterval(intervaloDisparo);
+
                     return;
                 }
 
-                if (quadrados[posicaoTiro].classList.contains("invasor")) {
-                    quadrados[posicaoTiro].classList.remove("tiro");
-                    quadrados[posicaoTiro].classList.remove("invasor");
-                    quadrados[posicaoTiro].classList.add("KABUM");
+                // DETECTAR IMPACTO
 
-                    const celdaImpacto = posicaoTiro;
+                if (
+                    celdas[posicionDisparo].classList.contains("invasor")
+                ) {
+
+                    celdas[posicionDisparo].classList.remove("tiro");
+
+                    celdas[posicionDisparo].classList.remove("invasor");
+
+                    // Mostrar explosión.
+
+                    celdas[posicionDisparo].classList.add("KABUM");
+
+                    const celdaImpacto = posicionDisparo;
+
                     setTimeout(() => {
-                        quadrados[celdaImpacto].classList.remove("KABUM");
+
+                        celdas[celdaImpacto].classList.remove("KABUM");
+
                     }, 250);
 
-                    clearInterval(tiroId);
+                    clearInterval(intervaloDisparo);
 
-                    const indiceInvasor = invasores.indexOf(posicaoTiro);
-                    if (indiceInvasor !== -1 && !atingidos.includes(indiceInvasor)) {
-                        atingidos.push(indiceInvasor);
-                        pontos += 10;
-                        pontuacao.textContent = pontos;
+                    // Identificar al invasor eliminado.
+
+                    const indiceInvasor = invasores.indexOf(
+                        posicionDisparo
+                    );
+
+                    if (
+                        indiceInvasor !== -1 &&
+                        !invasoresEliminados.includes(indiceInvasor)
+                    ) {
+
+                        invasoresEliminados.push(indiceInvasor);
+
+                        // Sumar 10 puntos por cada invasor eliminado.
+
+                        puntos += 10;
+
+                        elementoPuntuacion.textContent = puntos;
                     }
 
-                    // Si se eliminaron todos los invasores de la oleada actual
-                    if (atingidos.length === invasores.length) {
-                        clearInterval(invasoresId);
+                    // ========================================
+                    // COMPROBAR SI TERMINÓ LA OLEADA
+                    // ========================================
+
+                    if (
+                        invasoresEliminados.length === invasores.length
+                    ) {
+
+                        clearInterval(intervaloInvasores);
+
                         oleada++;
-                        oleadaDisplay.textContent = oleada;
-                        // Aumentar velocidad hasta un límite jugable de 100ms
+
+                        elementoOleada.textContent = oleada;
+
+                        // Aumentar la velocidad de los invasores.
+
                         velocidad = Math.max(100, velocidad - 35);
+
+                        // Iniciar la siguiente oleada.
+
                         setTimeout(() => {
-                            if (!juegoTerminado) generarOleada();
+
+                            if (!juegoTerminado) {
+
+                                generarOleada();
+                            }
+
                         }, 600);
                     }
+
                     return;
                 }
 
-                quadrados[posicaoTiro].classList.add("tiro");
+                // Si no hubo impacto, continuar dibujando el disparo.
+
+                celdas[posicionDisparo].classList.add("tiro");
             }
         }
     }
 
-    // Eventos de botones en pantalla y teclado
-    document.getElementById("esquerda").addEventListener("click", () => moverJogador({ keyCode: 37 }));
-    document.getElementById("direita").addEventListener("click", () => moverJogador({ keyCode: 39 }));
-    document.getElementById("atirar").addEventListener("click", () => atirar({ keyCode: 32 }));
-    btnReiniciar.addEventListener("click", iniciarJuego);
+    // Botón para mover a la izquierda.
 
-    document.addEventListener("keydown", moverJogador);
-    document.addEventListener("keyup", atirar);
+    document.getElementById("esquerda").addEventListener(
+        "click",
+        () => moverJugador({ keyCode: 37 })
+    );
 
-    // Arrancar la primera partida
+    // Botón para mover a la derecha.
+
+    document.getElementById("direita").addEventListener(
+        "click",
+        () => moverJugador({ keyCode: 39 })
+    );
+
+    // Botón para disparar.
+
+    document.getElementById("atirar").addEventListener(
+        "click",
+        () => disparar({ keyCode: 32 })
+    );
+
+    // Botón para reiniciar la partida.
+
+    botonReiniciar.addEventListener("click", iniciarJuego);
+
+    // EVENTOS DEL TECLADO
+
+    document.addEventListener("keydown", moverJugador);
+
+    document.addEventListener("keyup", disparar);
+
+    // INICIAR PRIMERA PARTIDA
+
     iniciarJuego();
+
 });

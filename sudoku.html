@@ -8,9 +8,7 @@
     <title>Sudoku | Grayscale</title>
 
     <style>
-        /* ========================================
-           CONFIGURACIÓN GENERAL
-        ======================================== */
+        /*CONFIGURACIÓN GENERAL*/
 
         :root {
             --gris-fondo: #000000;
@@ -44,9 +42,7 @@
             font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
         }
 
-        /* ========================================
-           CONTENEDOR PRINCIPAL
-        ======================================== */
+        /*CONTENEDOR PRINCIPAL*/
 
         #sudoku-app {
             display: flex;
@@ -82,9 +78,7 @@
             line-height: 1.5;
         }
 
-        /* ========================================
-           TABLERO DE SUDOKU
-        ======================================== */
+        /*TABLERO DE SUDOKU*/
 
         #sudoku-app .sudoku-container {
             display: flex;
@@ -110,9 +104,7 @@
             padding: 0;
         }
 
-        /* ========================================
-           CELDAS
-        ======================================== */
+        /*CELDAS*/
 
         #sudoku-app .cell {
             display: block;
@@ -135,9 +127,7 @@
             -webkit-appearance: none;
         }
 
-        /* ========================================
-           SEPARACIÓN DE BLOQUES 3X3
-        ======================================== */
+        /*SEPARACIÓN DE BLOQUES 3X3*/
 
         /* Líneas verticales */
 
@@ -159,9 +149,7 @@
             border-bottom: 0;
         }
 
-        /* ========================================
-           COLORES DE LOS BLOQUES 3X3
-        ======================================== */
+        /*COLORES DE LOS BLOQUES 3X3*/
 
         #sudoku-app .lightBackground {
             background-color: #d9d9d9;
@@ -171,9 +159,7 @@
             background-color: #555555;
         }
 
-        /* ========================================
-           CELDAS FIJAS
-        ======================================== */
+        /*CELDAS FIJAS*/
 
         #sudoku-app .fixed {
             color: #161616;
@@ -185,9 +171,7 @@
             color: #ffffff;
         }
 
-        /* ========================================
-           CELDAS EDITABLES
-        ======================================== */
+        /*CELDAS EDITABLES*/
 
         #sudoku-app .user-input {
             color: #176d68;
@@ -210,9 +194,7 @@
             outline-offset: -2px;
         }
 
-        /* ========================================
-           BOTONES
-        ======================================== */
+        /*BOTONES*/
 
         #sudoku-app .buttonContainer {
             display: flex;
@@ -383,9 +365,7 @@
 
             let initialPuzzle = [];
 
-            // ========================================
             // MEZCLAR NÚMEROS ALEATORIAMENTE
-            // ========================================
 
             function shuffle(array) {
 
@@ -399,9 +379,7 @@
                 return array;
             }
 
-            // ========================================
             // GENERAR SUDOKU
-            // ========================================
 
             function generateRandomSudoku(emptyCellsCount = 40) {
 
@@ -444,9 +422,7 @@
                 return board;
             }
 
-            // ========================================
             // LLENAR BLOQUES 3X3
-            // ========================================
 
             function fillBox(board, rowStart, colStart) {
 
@@ -463,9 +439,7 @@
                 }
             }
 
-            // ========================================
             // RESOLVER SUDOKU
-            // ========================================
 
             function solveSudoku(board) {
 
@@ -497,9 +471,7 @@
                 return false;
             }
 
-            // ========================================
             // ENCONTRAR CELDA VACÍA
-            // ========================================
 
             function findEmptyCell(board) {
 
@@ -516,9 +488,7 @@
                 return null;
             }
 
-            // ========================================
             // VALIDAR MOVIMIENTO
-            // ========================================
 
             function isValidMove(board, row, col, number) {
 
@@ -562,9 +532,7 @@
                 return true;
             }
 
-            // ========================================
             // LEER TABLERO ACTUAL
-            // ========================================
 
             function getCurrentBoardFromDOM() {
 
@@ -589,9 +557,7 @@
                 return board;
             }
 
-            // ========================================
             // CREAR TABLERO EN HTML
-            // ========================================
 
             function createSudokuGrid(board, basePuzzle) {
 
@@ -677,9 +643,7 @@
                 });
             }
 
-            // ========================================
             // COMPROBAR SOLUCIÓN
-            // ========================================
 
             function checkSolution() {
 
@@ -757,9 +721,7 @@
                 resultElement.className = "sudoku-result correct";
             }
 
-            // ========================================
             // RESOLVER TABLERO AUTOMÁTICAMENTE
-            // ========================================
 
             function solvePuzzle() {
 
@@ -783,9 +745,7 @@
                 }
             }
 
-            // ========================================
             // GENERAR NUEVO JUEGO
-            // ========================================
 
             function resetPuzzle() {
 
@@ -794,9 +754,7 @@
                 createSudokuGrid(initialPuzzle, initialPuzzle);
             }
 
-            // ========================================
             // INICIALIZACIÓN Y EVENTOS
-            // ========================================
 
             resetPuzzle();
 

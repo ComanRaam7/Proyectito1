@@ -8,9 +8,7 @@ const message = document.getElementById("message");
 const instruction = document.getElementById("instruction");
 const startButton = document.getElementById("startButton");
 
-// ========================================
 // PALETA DE COLORES GRAYSCALE
-// ========================================
 
 const COLORS = {
     background: "#191919",
@@ -25,9 +23,7 @@ const COLORS = {
 
 const ground = 250;
 
-// ========================================
 // JUGADOR
-// ========================================
 
 const player = {
     x: 80,
@@ -40,9 +36,7 @@ const player = {
     rotation: 0
 };
 
-// ========================================
 // VARIABLES DEL JUEGO
-// ========================================
 
 let obstacles = [];
 let score = 0;
@@ -52,9 +46,7 @@ let nextSpawn = 1.3;
 let lastTime = 0;
 let gameState = "ready";
 
-// ========================================
 // DIBUJAR FONDO
-// ========================================
 
 function drawBackground() {
 
@@ -89,9 +81,7 @@ function drawBackground() {
     ctx.fillRect(0, ground, canvas.width, 4);
 }
 
-// ========================================
 // DIBUJAR JUGADOR
-// ========================================
 
 function drawPlayer() {
 
@@ -123,9 +113,7 @@ function drawPlayer() {
     ctx.restore();
 }
 
-// ========================================
 // CREAR OBSTÁCULOS
-// ========================================
 
 function createObstacle() {
 
@@ -139,9 +127,7 @@ function createObstacle() {
     });
 }
 
-// ========================================
 // DIBUJAR OBSTÁCULOS
-// ========================================
 
 function drawObstacles() {
 
@@ -175,9 +161,7 @@ function drawObstacles() {
     });
 }
 
-// ========================================
 // SALTAR
-// ========================================
 
 function jump() {
 
@@ -194,9 +178,7 @@ function jump() {
     }
 }
 
-// ========================================
 // ACTUALIZAR JUGADOR
-// ========================================
 
 function updatePlayer(delta) {
 
@@ -216,9 +198,7 @@ function updatePlayer(delta) {
     }
 }
 
-// ========================================
 // ACTUALIZAR OBSTÁCULOS
-// ========================================
 
 function updateObstacles(delta) {
 
@@ -242,9 +222,7 @@ function updateObstacles(delta) {
     );
 }
 
-// ========================================
 // DETECTAR COLISIONES
-// ========================================
 
 function checkCollision() {
 
@@ -263,9 +241,7 @@ function checkCollision() {
     }
 }
 
-// ========================================
 // ACTUALIZAR PUNTUACIÓN
-// ========================================
 
 function updateScore(delta) {
 
@@ -277,9 +253,7 @@ function updateScore(delta) {
     speed = Math.min(370 + score * 1.5, 650);
 }
 
-// ========================================
 // DIBUJAR TODO
-// ========================================
 
 function draw() {
 
@@ -288,9 +262,7 @@ function draw() {
     drawObstacles();
 }
 
-// ========================================
 // BUCLE PRINCIPAL
-// ========================================
 
 function gameLoop(timestamp) {
 
@@ -311,9 +283,7 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
-// ========================================
 // INICIAR PARTIDA
-// ========================================
 
 function startGame() {
 
@@ -336,9 +306,7 @@ function startGame() {
     overlay.style.display = "none";
 }
 
-// ========================================
 // FINALIZAR PARTIDA
-// ========================================
 
 function endGame() {
 
@@ -354,15 +322,11 @@ function endGame() {
     overlay.style.display = "flex";
 }
 
-// ========================================
 // BOTÓN DE INICIO Y REINICIO
-// ========================================
 
 startButton.addEventListener("click", startGame);
 
-// ========================================
 // CONTROLES DEL TECLADO
-// ========================================
 
 document.addEventListener("keydown", function(event) {
 
@@ -384,18 +348,14 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
-// ========================================
 // CONTROL CON CLIC O PANTALLA TÁCTIL
-// ========================================
 
 canvas.addEventListener("pointerdown", function() {
 
     jump();
 });
 
-// ========================================
 // INICIAR ANIMACIÓN
-// ========================================
 
 // Dibujar pantalla inicial
 draw();
