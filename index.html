@@ -28,8 +28,7 @@
 <body id="page-top">
 
     <!-- NAVEGACIÓN -->
-
-    <nav class="navbar navbar-light fixed-top" id="mainNav">
+    <nav class="navbar navbar-dark fixed-top" id="mainNav">
 
         <div class="container px-4 px-lg-5">
 
@@ -37,7 +36,8 @@
                 LilGames
             </a>
 
-            <button class="navbar-toggler navbar-toggler-right"
+            <button class="navbar-toggler navbar-toggler-right position-relative"
+                style="z-index: 1050;"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive"
@@ -50,30 +50,32 @@
 
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse navbar-collapse position-fixed top-0 start-0 end-0 bg-dark border-bottom border-secondary py-2 px-4 shadow"
+                 id="navbarResponsive"
+                 style="z-index: 1040;">
 
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav flex-row justify-content-center align-items-center gap-3 gap-md-4 mx-auto flex-nowrap overflow-auto">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#Nosotros">
+                        <a class="nav-link py-1 text-nowrap" href="#Nosotros">
                             Nosotros
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#Proyecto">
+                        <a class="nav-link py-1 text-nowrap" href="#Proyecto">
                             Proyecto
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#Contacto">
+                        <a class="nav-link py-1 text-nowrap" href="#Contacto">
                             Contacto
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="categorias.html">
+                        <a class="nav-link active py-1 text-nowrap" href="categorias.html">
                             Categorías
                         </a>
                     </li>
